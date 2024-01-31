@@ -4,30 +4,32 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    float movespeed = 7;
-    public Rigidbody2D rb;
-    public Vector2 moveDirection;
+    float movespeed;
+    Rigidbody2D rb;
+    private Vector2 moveDirection;
     Animator animator;
-    BoxCollider2D ShotCollider;
+    [SerializeField] GameObject ShotLeg;
+    float walk = 6;
+    float SlowWalkSpeed = 3;
+    float SprintSpeed = 9;
+    float stop = 0;
+
 
     private void Start()
     {
         animator = GetComponent<Animator>();
-        ShotCollider = GetComponent<BoxCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
-        movement();
-        sprint();
+        movement();         
         WalkAnimation();
         ShotAnimation();
-    }
-
-    private void FixedUpdate()
-    {
-        move();
+        SlowWalk();
+        sprint();
         rotation();
+        move();
     }
 
     void movement()
@@ -45,15 +47,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void sprint()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            movespeed = 10;
+            movespeed = SprintSpeed;
+            animator.speed = 2;
         }
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            movespeed = 7;
+            movespeed = walk;
+            animator.speed = 1;
         }
-        Debug.Log(movespeed);
+    }
+
+    private void SlowWalk()
+    {
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            movespeed = SlowWalkSpeed;
+            animator.speed = 0.5f;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            movespeed = walk;
+            animator.speed = 1;
+        }
     }
     private void rotation()
     {
@@ -76,29 +93,66 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.A))
         {
-            animator.SetFloat("Walk", movespeed);
+            movespeed = walk;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", true);
         }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            movespeed = stop;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", false);
+        }
+
         if (Input.GetKey(KeyCode.W))
         {
-            animator.SetFloat("Walk", movespeed);
+            movespeed = walk;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", true);
         }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            movespeed = stop;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", false);
+        }
+
         if (Input.GetKey(KeyCode.S))
         {
-            animator.SetFloat("Walk", movespeed);
+            movespeed = walk;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", true);
         }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            movespeed = stop;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", false);
+        }
+
         if (Input.GetKey(KeyCode.D))
         {
-            animator.SetFloat("Walk", movespeed);
+            movespeed = walk;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", true);
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            movespeed = stop;
+            animator.SetFloat("Speed", movespeed);
+            animator.SetBool("IsWalking", false);
         }
     }
     IEnumerator Shot()
     {
-        movespeed = 0;
+        movespeed = 1;
         animator.SetBool("Shot", true);
-        ShotCollider.enabled = true;
+        ShotLeg.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        movespeed = 0.5f;
+        yield return new WaitForSeconds(0.3f);
         animator.SetBool("Shot", false);
-        ShotCollider.enabled = false;
-        yield return new WaitForSeconds(0.5f);
-        movespeed = 7;
+        ShotLeg.SetActive(false);
+        movespeed = walk;
     }
 }
