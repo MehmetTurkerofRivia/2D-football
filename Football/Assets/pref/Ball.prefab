@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4458235533441437316}
   - component: {fileID: 7280388008474231031}
   - component: {fileID: 6150011966588705626}
-  - component: {fileID: 1912233201193011691}
   - component: {fileID: 5756256424999394540}
   m_Layer: 0
   m_Name: Ball
@@ -173,18 +172,6 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
---- !u!114 &1912233201193011691
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7680629648019811738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e9026ed5a5ff844aa29fb28fd4b03b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &5756256424999394540
 Rigidbody2D:
   serializedVersion: 4
