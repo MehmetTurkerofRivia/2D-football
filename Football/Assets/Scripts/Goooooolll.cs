@@ -11,14 +11,13 @@ public class Goooooolll : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ball"))
         {
             Debug.Log("a");
-    
+
             audioSource.PlayOneShot(collisionSound);
         }
     }
-
 }
